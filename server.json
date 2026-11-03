@@ -1,0 +1,20 @@
+{
+  "name": "links-enos",
+  "description": "Dependency-free MCP memory server over stdio (SQLite, project-scoped).",
+  "version": "1.0.0",
+  "command": "links-enos",
+  "args": [],
+  "env": {},
+  "tools": [
+    "memory_write",
+    "memory_search",
+    "memory_get",
+    "memory_list",
+    "memory_delete",
+    "memory_context",
+    "memory_stats",
+    "memory_export"
+  ],
+  "homepage": "",
+  "license": "MIT"
+}

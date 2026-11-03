@@ -1,0 +1,208 @@
+[
+  {
+    "name": "memory_write",
+    "description": "Persist a durable memory (fact, decision, preference, snippet). Idempotent: writing the same content in the same scope refreshes the existing entry instead of duplicating it. Returns the stored record id.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string",
+          "description": "The memory body (Markdown ok)."
+        },
+        "title": {
+          "type": "string",
+          "description": "Short label; derived from content if omitted."
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Retrieval tags, e.g. ['deploy','nginx']."
+        },
+        "scope": {
+          "type": "string",
+          "description": "Namespace, e.g. 'project:demo'. Defaults to the server scope."
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "note",
+            "fact",
+            "decision",
+            "preference",
+            "task",
+            "snippet",
+            "reference"
+          ],
+          "description": "Memory category (default 'note')."
+        },
+        "importance": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "0..1 ranking hint (default 0.5)."
+        },
+        "id": {
+          "type": "string",
+          "description": "Update this existing memory id instead of creating one."
+        }
+      },
+      "required": [
+        "content"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "memory_search",
+    "description": "Full-text search across memories (FTS5 when available, LIKE fallback).",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "Keywords to look for."
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "description": "Max results (default 10)."
+        },
+        "scope": {
+          "type": "string",
+          "description": "Restrict to one scope."
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Require all of these tags."
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "memory_get",
+    "description": "Fetch one memory by id, including its full content.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "memory_list",
+    "description": "List recent memories, newest/most important first.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 200,
+          "description": "Default 20."
+        },
+        "offset": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Pagination offset."
+        },
+        "scope": {
+          "type": "string"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "memory_delete",
+    "description": "Delete a memory. Soft delete by default; hard=true removes the row permanently.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "hard": {
+          "type": "boolean",
+          "description": "Permanent delete (default false)."
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "memory_context",
+    "description": "Build a compact Markdown context block from memories relevant to a query — drop-in text for a system prompt or handoff note.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string"
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 50,
+          "description": "Default 8."
+        },
+        "scope": {
+          "type": "string"
+        },
+        "max_chars": {
+          "type": "integer",
+          "minimum": 200,
+          "maximum": 20000,
+          "description": "Default 4000."
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "memory_stats",
+    "description": "Storage statistics: database path, entry counts per scope, top tags, FTS availability.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {},
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "memory_export",
+    "description": "Export memories as portable JSON (backup / migration between machines).",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "scope": {
+          "type": "string",
+          "description": "Optional single-scope export."
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  }
+]

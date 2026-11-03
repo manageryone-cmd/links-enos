@@ -1,0 +1,17 @@
+{
+  "servers": {
+    "links-enos": {
+      "type": "stdio",
+      "command": "python3",
+      "args": [
+        "-m",
+        "enos.mcp_server",
+        "--db",
+        "${workspaceFolder}/.enos/memory.db"
+      ],
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}"
+      }
+    }
+  }
+}

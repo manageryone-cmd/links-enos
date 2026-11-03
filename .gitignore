@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.DS_Store
+*.swp
+
+# packaging / distribution artifacts
+build/
+dist/
+*.spec.bak
+
+# local memory databases (never commit user memories)
+*.db
+*.db-wal
+*.db-shm
+.enos/

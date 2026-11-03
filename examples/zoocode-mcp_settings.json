@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "links-enos": {
+      "command": "python3",
+      "args": [
+        "-m",
+        "enos.mcp_server"
+      ],
+      "env": {
+        "PYTHONPATH": "<path-to-links-enos>"
+      },
+      "disabled": false,
+      "autoApprove": [],
+      "timeout": 60
+    }
+  }
+}
