@@ -26,7 +26,7 @@ Can the machine that runs the server use Python >= 3.8?
 ### A. Editable install (source checkout)
 
 ```bash
-git clone https://github.com/<org>/links-enos.git
+git clone https://github.com/manageryone-cmd/links-enos.git
 cd links-enos
 python3 -m pip install -e .
 links-enos --selftest
